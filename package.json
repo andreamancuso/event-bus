@@ -4,7 +4,7 @@
   "description": "",
   "author": "Andrea Mancuso <and.mancuso@googlemail.com>",
   "scripts": {
-    "test": "mocha --recursive --require test/setup.js --compilers js:babel-register test"
+    "test": "mocha --recursive --compilers js:babel-register test"
   },
   "main": "index.js",
   "repository": {

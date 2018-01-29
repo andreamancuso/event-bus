@@ -18,17 +18,28 @@ describe('EventBus', () => {
 
 	});
 
+	it('supports Symbols', (done) => {
+	    const one = Symbol('one');
+        eventBus.on(one, () => {
+            done();
+        });
+        eventBus.emit(one);
+
+	});
+
 	it('should call multiple handler when an action is fired', () => {
 	    let counter = 0;
+        eventBus.on('two', () => {
+            counter++;
+        });
         eventBus.on('two', () => {
             counter++;
         });
 
         eventBus.emit('two');
         eventBus.emit('two');
-        eventBus.emit('two');
 
-        expect(counter).to.equal(3);
+        expect(counter).to.equal(4);
 	});
 
 	it('should call action handler(s) with one parameter', () => {
