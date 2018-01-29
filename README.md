@@ -11,4 +11,15 @@ Allows one or more functions (action handlers) to be attached to named events (a
 `eventBus.emit('eventName')`
 
 The broker will invoke any action handlers currently subscribed to the specified event name. Any arguments received will be forwarded to the action handlers.
- 
+
+Example:
+
+```
+const eventBus = new EventBus();
+
+eventBus.on('log', function() {
+    console.log(...arguments); // Prints 'hello world !'
+});
+
+eventBus.emit('log', 'hello', 'world', '!');
+```
