@@ -77,4 +77,56 @@ describe('EventBus', () => {
 
         expect(obj.counter).to.equal(2);
 	});
+
+	it('should allow to unsubscribe from an event', () => {
+	    let counter = 0;
+
+        const handler = () => {counter++};
+
+        eventBus.on('log', handler);
+
+        eventBus.emit('log');
+
+        eventBus.off('log', handler);
+
+        eventBus.emit('log');
+
+        expect(counter).to.equal(1);
+	});
+
+	it('should allow to unsubscribe from an event, specifying a context object', () => {
+        const obj = {
+            counter: 0,
+            method() {
+                this.counter++;
+            }
+        };
+
+        eventBus.on('log', obj.method, obj);
+
+        eventBus.emit('log');
+
+        eventBus.off('log', obj.method, obj);
+
+        eventBus.emit('log');
+
+        expect(obj.counter).to.equal(1);
+	});
+
+	it('should prevent action handlers to be subscribed to a specified event more than once', () => {
+        const obj = {
+            counter: 0,
+            method() {
+                this.counter++;
+            }
+        };
+
+        eventBus.on('log', obj.method, obj);
+        eventBus.on('log', obj.method, obj);
+
+        eventBus.emit('log');
+        eventBus.emit('log');
+
+        expect(obj.counter).to.equal(2);
+	});
 });
