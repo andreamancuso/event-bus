@@ -6,10 +6,13 @@ class EventBus {
     /**
      * @param {String|Symbol} eventName
      * @param {Function} handler
+     * @param {Object|undefined} context (optional)
      */
-    on(eventName, handler) {
+    on(eventName, handler, context = null) {
         this.handlers[eventName] = this.handlers[eventName] || [];
-        this.handlers[eventName].push(handler);
+        this.handlers[eventName].push({
+            handler, context
+        });
     }
 
     /**
@@ -18,7 +21,8 @@ class EventBus {
      */
     emit(eventName, ...args) {
         if (typeof this.handlers[eventName] !== 'undefined') {
-            this.handlers[eventName].forEach(handler => handler.apply(null, args));
+            this.handlers[eventName].forEach(({handler, context}) =>
+                handler.apply(context, args));
         }
     }
 }

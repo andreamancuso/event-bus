@@ -61,4 +61,20 @@ describe('EventBus', () => {
 
         eventBus.emit('log', 'hello', 'world', '!');
 	});
+
+	it('should allow to specify a custom context object', () => {
+	    const obj = {
+	        counter: 0,
+	        method() {
+	            this.counter++;
+            }
+        };
+
+        eventBus.on('log', obj.method, obj);
+
+        eventBus.emit('log');
+        eventBus.emit('log');
+
+        expect(obj.counter).to.equal(2);
+	});
 });

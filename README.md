@@ -4,9 +4,9 @@ This library is an implementation of the Pub/Sub pattern (basic, synchronous imp
 
 Instances of the EventBus (brokers) can be used as follows:
 
-`eventBus.on('eventName', function() {})`
+`eventBus.on('eventName', function() {}, context)`
 
-Allows one or more functions (action handlers) to be attached to named events (actions) emitted by the object. Event names can be any valid JavaScript property.
+Allows one or more functions (action handlers) to be attached to named events (actions) emitted by the object. Event names can be any valid JavaScript property. An optional context object can be specified.
 
 `eventBus.emit('eventName')`
 
